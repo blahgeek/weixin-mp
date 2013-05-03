@@ -30,4 +30,4 @@ def makeXml(dic):
     for i in dic:
         tmp = ET.SubElement(xml_tree, i)
         tmp.text = dic[i]
-    return ET.dump(xml_tree)
+    return ET.tostring(xml_tree)

@@ -13,7 +13,7 @@ def makeMsg(req_msg, dic):
     dic.update({
         'ToUserName': req_msg['FromUserName'], 
         'FromUserName': req_msg['ToUserName'], 
-        'CreateTime': int(time.time()), 
+        'CreateTime': str(int(time.time())), 
         'FuncFlag': '0', 
         })
     return makeXml(dic)
