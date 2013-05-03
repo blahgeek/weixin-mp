@@ -6,12 +6,12 @@ import sys
 if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
-
-# Django settings for treehole project.
 import os 
 
 DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
         os.path.realpath(__file__)), '..')
+
+WEIXIN_TOKEN = 'token'
 
 # Django settings for weixin project.
 
@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'weixin', 
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

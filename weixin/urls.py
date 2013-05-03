@@ -5,6 +5,7 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+        url(r'^$', 'weixin.views.index', name='index'), 
     # Examples:
     # url(r'^$', 'weixin.views.home', name='home'),
     # url(r'^weixin/', include('weixin.foo.urls')),
