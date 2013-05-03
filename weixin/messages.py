@@ -44,5 +44,5 @@ def makeImageMsg(req_msg, images):
     return makeMsg(req_msg, {
         'MsgType': 'news', 
         'ArticleCount': str(len(images)), 
-        'Articles': Articles, 
+        'Articles': articles, 
         })
