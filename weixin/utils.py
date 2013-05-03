@@ -25,9 +25,19 @@ def parseXml(req):
         content[i.tag] = i.text
     return content
 
-def makeXml(dic):
-    xml_tree = ET.Element('xml')
+def makeXml(dic, root_tag = 'xml'):
+    xml_tree = ET.Element(root_tag)
+    def _make_node(root, key, val):
+        if type(val) == ET.Element:
+            root.append(val)
+            return
+        node = ET.SubElement(root, key)
+        if type(val) == str:
+            node.text = val
+        elif type(val) == dict:
+            for i in val:
+                _make_node(node, i, val[i])
     for i in dic:
-        tmp = ET.SubElement(xml_tree, i)
-        tmp.text = dic[i]
-    return ET.tostring(xml_tree)
+        _make_node(xml_tree, i, dic[i])
+    return xml_tree
+#    return ET.tostring(xml_tree)

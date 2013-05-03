@@ -7,6 +7,7 @@ if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
 import time
+import xml.etree.ElementTree as ET
 from .utils import makeXml
 
 def makeMsg(req_msg, dic):
@@ -16,7 +17,7 @@ def makeMsg(req_msg, dic):
         'CreateTime': str(int(time.time())), 
         'FuncFlag': '0', 
         })
-    return makeXml(dic)
+    return ET.tostring(makeXml(dic))
 
 def makeTextMsg(req_msg, text):
     return makeMsg(req_msg, {
@@ -31,3 +32,17 @@ def makeMusicMsg(req_msg, url, hqurl = None):
         'HQMusicUrl': hqurl if hqurl else url, 
         })
 
+def makeImageMsg(req_msg, images):
+    # images := ((picurl, title, desc, url), ...)
+    articles = ET.Element('Articles')
+    for i in images:
+        articles.append(makeXml({
+            'PicUrl': i[0], 
+            'Title': i[1], 
+            'Description': i[2], 
+            'Url': i[3]}, 'item'))
+    return makeMsg(req_msg, {
+        'MsgType': 'news', 
+        'ArticleCount': str(len(images)), 
+        'Articles': Articles, 
+        })
