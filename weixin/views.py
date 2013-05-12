@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib import messages
 from .utils import *
 from .messages import *
-from calendar.sample import getTodayEvents, getTomorrowEvents
+from googlecalendar.sample import getTodayEvents, getTomorrowEvents
 
 def index(req):
     if not checkSig(req):
