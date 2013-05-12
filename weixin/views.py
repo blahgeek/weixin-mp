@@ -20,6 +20,5 @@ def index(req):
     if req.method == 'GET':
         return HttpResponse(req.GET.get('echostr', ''))
     req_msg = parseXml(req)
-    return HttpResponse(makeImageMsg(req_msg, 
-        (('https://encrypted.google.com/images/srpr/logo4w.png', 'Google', 'Test', 'https://google.com'), )))
+    return HttpResponse(makeTextMsg(req_msg, u'测试'))
 

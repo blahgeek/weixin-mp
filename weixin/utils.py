@@ -32,7 +32,7 @@ def makeXml(dic, root_tag = 'xml'):
             root.append(val)
             return
         node = ET.SubElement(root, key)
-        if type(val) == str:
+        if type(val) == str or type(val) == unicode:
             node.text = val
         elif type(val) == dict:
             for i in val:
