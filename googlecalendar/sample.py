@@ -58,10 +58,10 @@ def getTodayEvents():
     return getEvents(now, end)
 
 def getTomorrowEvents():
-    tomorrow_now = datetime.now() + timedelta(day=1)
+    tomorrow_now = datetime.now() + timedelta(days=1)
     start = datetime(year=tomorrow_now.year, month=tomorrow_now.month, day=tomorrow_now.day, 
                    hour=0, minute=0, second=1)
-    return getEvents(start, start + timedelta(day=1))
+    return getEvents(start, start + timedelta(days=1))
 
 if __name__ == '__main__':
     for x in getTodayEvents():
