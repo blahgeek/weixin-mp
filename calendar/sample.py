@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 try:
     from .apiclient.discovery import build
-except ImportError:
+except ValueError:
     from apiclient.discovery import build
 from oauth2client.file import Storage
 from oauth2client.client import AccessTokenRefreshError
@@ -17,8 +17,8 @@ from oauth2client.tools import run
 
 TIMEZONE = '+08:00'  # It's a quick hack, FIXME
 
-CLIENT_SECRETS = os.path.join(os.path.dirname(\
-        os.path.realpath(__file__)), 'client_secrets.json')
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+CLIENT_SECRETS = os.path.join(DIR_PATH, 'client_secrets.json')
 
 FLOW = flow_from_clientsecrets(CLIENT_SECRETS,
         scope=[
@@ -29,8 +29,8 @@ def parseTime(t):
     t = t.strip().replace(TIMEZONE, '')
     return parse(t)
 
-def getRecentEvent(delta):
-    storage = Storage('sample.dat')
+def getEvents(start, end):
+    storage = Storage(os.path.join(DIR_PATH, 'sample.dat'))
     credentials = storage.get()
     if credentials is None or credentials.invalid:
         credentials = run(FLOW, storage)
@@ -43,14 +43,26 @@ def getRecentEvent(delta):
             calendarId='primary', 
             singleEvents=True, 
             orderBy='startTime', 
-            timeMin=datetime.now().isoformat()+TIMEZONE, 
-            timeMax=(datetime.now()+delta).isoformat()+TIMEZONE, )
+            timeMin=start.isoformat()+TIMEZONE, 
+            timeMax=end.isoformat()+TIMEZONE, )
 
     response = request.execute()
-    return [(x['summary'], parseTime(x['start']['dateTime']), parseTime(x['end']['dateTime']))\
+    return [(x['summary'], x.get('location', ''), \
+        parseTime(x['start']['dateTime']), parseTime(x['end']['dateTime']))\
             for x in response.get('items', [])]
 
+def getTodayEvents():
+    now = datetime.now()
+    end = datetime(year=now.year, month=now.month, day=now.day, 
+                   hour=23, minute=59, second=59)
+    return getEvents(now, end)
+
+def getTomorrowEvents():
+    tomorrow_now = datetime.now() + timedelta(day=1)
+    start = datetime(year=tomorrow_now.year, month=tomorrow_now.month, day=tomorrow_now.day, 
+                   hour=0, minute=0, second=1)
+    return getEvents(start, start + timedelta(day=1))
+
 if __name__ == '__main__':
-    delta = timedelta(days=1)
-    for x in getRecentEvent(delta):
-        print x[0], (x[1] - datetime.now()).total_seconds(), (x[2] - datetime.now()).total_seconds()
+    for x in getTodayEvents():
+        print x
