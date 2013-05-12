@@ -11,7 +11,7 @@ import os
 DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
         os.path.realpath(__file__)), '..')
 
-WEIXIN_TOKEN = 'token'
+WEIXIN_TOKEN = 'blahgeek'
 
 # Django settings for weixin project.
 

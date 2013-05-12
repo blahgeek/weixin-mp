@@ -45,4 +45,3 @@ def index(req):
                     ret += u'有' + x[0] + u'; '
 
     return HttpResponse(makeTextMsg(req_msg, ret))
-
