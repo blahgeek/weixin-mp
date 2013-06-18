@@ -7,9 +7,15 @@ if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
 import os 
+import imp
 
 DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
         os.path.realpath(__file__)), '..')
+
+plugin_url = os.path.join(DJANGO_ROOT_DIR, 'plugins')
+plugins = [os.path.join(plugin_url, i) for i in os.listdir(plugin_url)]
+plugins = filter(lambda x: x.endswith('.py'), plugins)
+plugins = map(lambda x: imp.load_source('', x), plugins)
 
 WEIXIN_TOKEN = 'blahgeek'
 
