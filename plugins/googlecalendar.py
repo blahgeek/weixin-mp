@@ -1,15 +1,17 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding=UTF-8 -*-
+# Created at Jul 16 15:18 by BlahGeek@Gmail.com
+
+import sys
+if hasattr(sys, 'setdefaultencoding'):
+    sys.setdefaultencoding('UTF-8')
 
 import httplib2
 import os
-import sys
 from dateutil.parser import parse
 from datetime import datetime, timedelta
 
-try:
-    from .apiclient.discovery import build
-except ValueError:
-    from apiclient.discovery import build
+from lib.apiclient.discovery import build
 from oauth2client.file import Storage
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.client import flow_from_clientsecrets
@@ -18,6 +20,7 @@ from oauth2client.tools import run
 TIMEZONE = '+08:00'  # It's a quick hack, FIXME
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+DIR_PATH = os.path.join(DIR_PATH, 'calendar_data')
 CLIENT_SECRETS = os.path.join(DIR_PATH, 'client_secrets.json')
 
 FLOW = flow_from_clientsecrets(CLIENT_SECRETS,
@@ -30,7 +33,7 @@ def parseTime(t):
     return parse(t)
 
 def getEvents(start, end):
-    storage = Storage(os.path.join(DIR_PATH, 'sample.dat'))
+    storage = Storage(os.path.join(DIR_PATH, 'storage.dat'))
     credentials = storage.get()
     if credentials is None or credentials.invalid:
         credentials = run(FLOW, storage)
@@ -63,6 +66,31 @@ def getTomorrowEvents():
                    hour=0, minute=0, second=1)
     return getEvents(start, start + timedelta(days=1))
 
+def predict(text):
+    return u'有空' in text
+
+def handle(text):
+    ret = ''
+    events = None
+    if u'今天' in text:
+        events = getTodayEvents()
+    elif u'明天' in text:
+        events = getTomorrowEvents()
+
+    if events is None:
+        ret = u'我是机器人，理解不了了耶，直接来找我问啦...'
+    elif len(events) == 0:
+        ret = u'似乎没有事耶 :P'
+    else:
+        for x in events:
+            ret += x[2].strftime('%H:%M') + '-'
+            ret += x[3].strftime('%H:%M')
+            if x[1] != '':
+                ret += u'在' + x[1]
+            ret += u'有' + x[0] + u'; '
+    return ret
+
 if __name__ == '__main__':
     for x in getTodayEvents():
         print x
+
