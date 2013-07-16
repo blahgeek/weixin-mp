@@ -22,4 +22,5 @@ def handle(text):
         c.execute("select * from student where %s = ?" % text[0], [text[1]])
     if text[0] == 'ip':
         c.execute("select * from ip where ip = ?", [text[1]])
-    return '\n'.join([','.join(x) for x in c.fetchall()])
+    ret = map(lambda x: [i for i in x if i is not None], c.fetchall())
+    return '; '.join([','.join(x) for x in ret])
