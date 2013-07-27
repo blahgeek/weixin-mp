@@ -7,6 +7,7 @@ if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
 import sqlite3
+import os
 
 DB_FILE = os.path.join(os.path.dirname(__file__), 'student.sqlite3')
 
