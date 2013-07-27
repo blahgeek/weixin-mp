@@ -8,6 +8,7 @@ if hasattr(sys, 'setdefaultencoding'):
 
 import os
 import imp
+
 FILE_DIR = os.path.realpath(os.path.dirname(__file__))
 sys.path.append(os.path.join(FILE_DIR, 'lib'))
 PLUGIN_DIR = os.path.join(FILE_DIR, 'plugins')
@@ -15,13 +16,11 @@ PLUGIN_DIR = os.path.join(FILE_DIR, 'plugins')
 _files = os.listdir(PLUGIN_DIR)
 _files = filter(lambda x: x.endswith('.py'), _files)
 plugins = []
+
 for x in _files:
     name = x.replace('.py', '')
     fp, pathname, desc = imp.find_module(name, [PLUGIN_DIR])
     plugins.append(imp.load_module(name, fp, pathname, desc))
-#plugins = map(lambda x: imp.load_source(x, os.path.join(PLUGIN_DIR, x)), _files)
-
-print plugins
 
 def response(text):
     try:
