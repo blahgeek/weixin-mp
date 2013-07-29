@@ -27,7 +27,7 @@ def response(text):
         plugin = filter(lambda x: x.predict(text), plugins)[0]
     except IndexError:
         print >> sys.stderr, 'None available'
-        return ''
+        return 'No handler found.'
     print >> sys.stderr, 'Handle using', plugin
     return plugin.handle(text)
 

@@ -21,7 +21,7 @@ def index(req):
     if req.method == 'GET':
         return HttpResponse(req.GET.get('echostr', ''))
     req_msg = parseXml(req)
-    ret = u''
+    ret = 'Null Response.'
 
     if req_msg.get('MsgType', '') == 'text':
         ret = response(req_msg.get('Content', ''))
