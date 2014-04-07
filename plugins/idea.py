@@ -17,4 +17,4 @@ def handle(text):
     os.environ['DJANGO_SETTINGS_MODULE'] = 'challenge.settings'
     ret = subprocess.check_output(CMD + args)
     os.environ['DJANGO_SETTINGS_MODULE'] = backup
-    return ret
+    return ret.decode('utf8')
