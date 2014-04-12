@@ -4,3 +4,4 @@
 
 NO_HANDLER = 'No handler found.'
 NULL_RESPONSE = 'Null response'
+HANDLE_ERROR = 'Error when handling.'

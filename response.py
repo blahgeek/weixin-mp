@@ -6,7 +6,7 @@ import sys
 import os
 import imp
 import logging
-from msg import NO_HANDLER
+from msg import NO_HANDLER, HANDLE_ERROR
 
 FILE_DIR = os.path.realpath(os.path.dirname(__file__))
 sys.path.append(os.path.join(FILE_DIR, 'lib'))
@@ -32,7 +32,11 @@ def response(text):
         logging.warn('No handler available.')
         return NO_HANDLER
     logging.info('Using handler: %s' % str(plugin))
-    return plugin.handle(text)
+    try:
+        ret = plugin.handle(text)
+    except Exception:
+        ret = HANDLE_ERROR
+    return ret
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
