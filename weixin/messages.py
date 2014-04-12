@@ -2,10 +2,6 @@
 # -*- coding=UTF-8 -*-
 # Created at May 03 13:37 by BlahGeek@Gmail.com
 
-import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
 import time
 import xml.etree.ElementTree as ET
 from .utils import makeXml

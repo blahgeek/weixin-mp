@@ -2,10 +2,6 @@
 # -*- coding=UTF-8 -*-
 # Created at May 03 13:36 by BlahGeek@Gmail.com
 
-import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
 from weixin.settings import WEIXIN_TOKEN
 import hashlib
 import xml.etree.ElementTree as ET
