@@ -3,29 +3,14 @@
 # Created at Jul 16 15:59 by BlahGeek@Gmail.com
 
 import sys
-import os
-import imp
 import logging
 from msg import NO_HANDLER, HANDLE_ERROR
 
-FILE_DIR = os.path.realpath(os.path.dirname(__file__))
-sys.path.append(os.path.join(FILE_DIR, 'lib'))
-PLUGIN_DIR = os.path.join(FILE_DIR, 'plugins')
-
-plugins = []
-
-files = filter(lambda x: x.endswith('.py'), os.listdir(PLUGIN_DIR))
-files = map(lambda x: x.replace('.py', ''), files)
-
-for x in files:
-    name = x.replace('.py', '')
-    fp, pathname, desc = imp.find_module(name, [PLUGIN_DIR])
-    plugins.append(imp.load_module(name, fp, pathname, desc))
-
-plugins = filter(lambda m: hasattr(m, 'predict') and hasattr(m, 'handle'), plugins)
-
+from plugins import Plugin
+from plugins import *
 
 def response(text):
+    plugins = map(lambda x: x(), iter(Plugin))
     try:
         plugin = max(plugins, key=lambda x: x.predict(text))
     except ValueError:
