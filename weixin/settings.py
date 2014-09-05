@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'solo',
     'weixin',
     'keywordreply',
+    'vote',
 )
 
 MIDDLEWARE_CLASSES = (

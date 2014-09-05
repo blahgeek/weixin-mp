@@ -17,6 +17,6 @@ def index(req):
     ret = NULL_RESPONSE
 
     if req_msg.get('MsgType', '') == 'text':
-        ret = response(req_msg.get('Content', ''))
+        ret = response(req_msg.get('Content', ''), req_msg['FromUserName'])
 
     return HttpResponse(makeTextMsg(req_msg, ret))

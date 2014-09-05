@@ -16,9 +16,9 @@ class KeywordReplyPlugin(Plugin):
         except IndexError:
             self.reply = None
             return 0
-        return 100
+        return 50
 
-    def handle(self, text):
+    def handle(self, text, userid):
         assert self.reply is not None
         self.reply.count += 1
         self.reply.save()

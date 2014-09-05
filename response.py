@@ -12,7 +12,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "weixin.settings")
 from plugins import Plugin
 from plugins import *
 
-def response(text):
+def response(text, userid):
     plugins = map(lambda x: x(), iter(Plugin))
     try:
         plugin = max(plugins, key=lambda x: x.predict(text))
@@ -21,11 +21,14 @@ def response(text):
         return NO_HANDLER
     logging.info('Using handler: %s' % str(plugin))
     try:
-        ret = plugin.handle(text)
+        ret = plugin.handle(text, userid)
     except Exception:
         ret = HANDLE_ERROR
     return ret
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    print response(sys.argv[1].decode('utf8'))
+    import django
+    django.setup() 
+    print response(sys.argv[1].decode('utf8'), 
+        'default' if len(sys.argv) < 3 else sys.argv[2])

@@ -25,9 +25,9 @@ class Plugin(object):
             return: 0 - 100 '''
         raise NotImplementedError()
 
-    def handle(self, text):
+    def handle(self, text, userid):
         ''' @text: unicode
             return unicode '''
         raise NotImplementedError()
 
-__all__ = ['sample', 'keywordreplyplugin']
+__all__ = ['sample', 'keywordreplyplugin', 'voteplugin']

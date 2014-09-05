@@ -12,6 +12,6 @@ class SamplePlugin(Plugin):
             return: number, 0-100 '''
         return 10
 
-    def handle(self, text):
+    def handle(self, text, userid):
         ''' return unicode '''
-        return 'I got: %s, Yeah!' % text
+        return 'I got: %s from %s, Yeah!' % (text, userid)
