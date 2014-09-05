@@ -81,6 +81,9 @@ BOWER_INSTALLED_APPS = (
     'highcharts',
 )
 
+ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
+
 ROOT_URLCONF = 'weixin.urls'
 
 WSGI_APPLICATION = 'weixin.wsgi.application'
