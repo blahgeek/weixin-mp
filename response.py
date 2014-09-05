@@ -3,8 +3,11 @@
 # Created at Jul 16 15:59 by BlahGeek@Gmail.com
 
 import sys
+import os
 import logging
 from msg import NO_HANDLER, HANDLE_ERROR
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "weixin.settings")
 
 from plugins import Plugin
 from plugins import *

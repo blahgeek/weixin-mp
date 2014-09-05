@@ -30,4 +30,4 @@ class Plugin(object):
             return unicode '''
         raise NotImplementedError()
 
-__all__ = ['sample', ]
+__all__ = ['sample', 'keywordreplyplugin']
