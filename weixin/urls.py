@@ -7,6 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'weixin.views.index', name='index'), 
+
+    url(r'^vote/', include('vote.urls')),
     # Examples:
     # url(r'^$', 'weixin.views.home', name='home'),
     # url(r'^weixin/', include('weixin.foo.urls')),

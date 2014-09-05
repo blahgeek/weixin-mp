@@ -19,11 +19,11 @@ class VoteConfiguration(SingletonModel):
     prefix = models.CharField(max_length=255, default=u'投票',
         help_text='Prefix for votes for detecting')
 
-    fail_msg = models.CharField(max_length=1024, default=u'投票失败！投票格式：“投票 3 4 5”，最多可投3个不同的作品，作品范围为1-10',
+    fail_msg = models.TextField(default=u'投票失败！投票格式：“投票 3 4 5”，最多可投3个不同的作品，作品范围为1-10',
         help_text='Fail message')
-    dup_msg = models.CharField(max_length=1024, default=u'投票失败！您已投过！',
+    dup_msg = models.TextField(default=u'投票失败！您已投过！',
         help_text='Fail message for duplicate')
-    ok_msg = models.CharField(max_length=1024, default=u'投票成功！',
+    ok_msg = models.TextField(default=u'投票成功！',
         help_text='Success message')
 
 
