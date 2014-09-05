@@ -4,7 +4,7 @@
 
 from django.http import HttpResponse, HttpResponseForbidden
 from .utils import checkSig, parseXml
-from .messages import makeTextMsg
+from .messages import makeTextMsg, makeImageMsg
 from response import response
 from msg import NULL_RESPONSE
 
@@ -19,4 +19,9 @@ def index(req):
     if req_msg.get('MsgType', '') == 'text':
         ret = response(req_msg.get('Content', ''), req_msg['FromUserName'])
 
-    return HttpResponse(makeTextMsg(req_msg, ret))
+    if isinstance(ret, unicode) or isinstance(ret, str):
+        ret = makeTextMsg(req_msg, ret)
+    elif isinstance(ret, list) or isinstance(ret, tuple):
+        ret = makeImageMsg(req_msg, ret)
+
+    return HttpResponse(ret)

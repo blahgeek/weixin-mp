@@ -22,4 +22,8 @@ class KeywordReplyPlugin(Plugin):
         assert self.reply is not None
         self.reply.count += 1
         self.reply.save()
-        return self.reply.reply
+
+        imagereply = self.reply.imagereply
+        if imagereply.count() == 0:
+            return self.reply.reply
+        return [(x.picurl, x.title, x.description, x.url) for x in imagereply.all()[:10]]
