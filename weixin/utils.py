@@ -7,9 +7,9 @@ import hashlib
 import xml.etree.ElementTree as ET
 
 def checkSig(req):
-    signature = req.GET.get("signature", None)
-    timestamp = req.GET.get("timestamp", None)
-    nonce = req.GET.get("nonce", None)
+    signature = req.GET.get("signature", '')
+    timestamp = req.GET.get("timestamp", '')
+    nonce = req.GET.get("nonce", '')
     tmp = ''.join(sorted([WEIXIN_TOKEN, timestamp, nonce]))
     tmp = hashlib.sha1(tmp).hexdigest()
     return tmp == signature

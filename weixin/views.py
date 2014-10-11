@@ -3,11 +3,13 @@
 # Created at May 03 12:43 by BlahGeek@Gmail.com
 
 from django.http import HttpResponse, HttpResponseForbidden
+from django.views.decorators.csrf import csrf_exempt
 from .utils import checkSig, parseXml
 from .messages import makeTextMsg, makeImageMsg
 from response import response
 from msg import NULL_RESPONSE
 
+@csrf_exempt
 def index(req):
     if not checkSig(req):
         return HttpResponseForbidden()
