@@ -37,7 +37,9 @@ class THUStudentPlugin(Plugin):
         cursor = conn.cursor()
 
         name = self.name.strip()
-        if name.startswith('2'):
+        if re.match('^[a-z]+[0-9]+$', name) is not None:
+            cursor.execute('select * from student where username = ?', (name, ))
+        elif re.match('^[0-9]{10}$', name) is not None:
             cursor.execute('select * from student where id = ?', (name, ))
         else:
             cursor.execute('select * from student where name = ?', (name, ))
