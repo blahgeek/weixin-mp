@@ -5,6 +5,7 @@
 import sqlite3
 from . import Plugin
 import os
+import re
 
 path = os.path.dirname(__file__)
 path = os.path.join(path, 'student.sqlite3')
@@ -13,6 +14,10 @@ class THUStudentPlugin(Plugin):
 
     def predict(self, text):
         if text.endswith(u'是谁'):
+            self.name = re.sub(u'是谁$', '', text)
+            return 90
+        if text.startswith(u'谁是'):
+            self.name = re.sub(u'^谁是', '', text)
             return 90
         return 0
 
@@ -31,7 +36,7 @@ class THUStudentPlugin(Plugin):
         conn = sqlite3.connect(path)
         cursor = conn.cursor()
 
-        name = text.replace(u'是谁', '').strip()
+        name = self.name.strip()
         if name.startswith('2'):
             cursor.execute('select * from student where id = ?', (name, ))
         else:
