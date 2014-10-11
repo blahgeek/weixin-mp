@@ -23,7 +23,7 @@ class THUStudentPlugin(Plugin):
 
     def make_str(self, data):
         ret = '%s(%s,%s)' % (data[1], data[0], data[7])
-        ret += u'，' + data[2] + u'，' + data[6]
+        ret += u'，' + data[2] + u'，' + (data[5] if data[6] is None else data[6])
         ret += u'，' + '%s(%s)' % (data[4], data[3])
         ret += u'，身份证' + data[8]
         if data[9] and data[9] != 'NULL':
@@ -41,7 +41,7 @@ class THUStudentPlugin(Plugin):
             cursor.execute('select * from student where id = ?', (name, ))
         else:
             cursor.execute('select * from student where name = ?', (name, ))
-        results = cursor.fetchmany()
+        results = cursor.fetchall()
         if not results:
             return u'未找到结果！'
         elif len(results) == 1:
