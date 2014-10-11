@@ -22,7 +22,7 @@ def response(text, userid):
     logging.info('Using handler: %s' % str(plugin))
     try:
         ret = plugin.handle(text, userid)
-    except Exception:
+    except RuntimeError:
         ret = HANDLE_ERROR
     return ret
 

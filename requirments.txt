@@ -2,3 +2,5 @@ django
 django-admin-tools
 django-solo
 django-bower
+sqlite3
+uwsgi
