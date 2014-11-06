@@ -25,7 +25,11 @@ class DormLightPlugin(Plugin):
         return 0
 
     def handle(self, text, userid):
-        requests.get(self.ON_URL if self.action else self.OFF_URL, 
-                     timeout=3)
+        try:
+            requests.get(self.ON_URL if self.action else self.OFF_URL, 
+                         allow_redirects=False,
+                         timeout=3)
+        except requests.Timeout:
+            return 'Timeout'
         return random.choice(self.replys)
 
